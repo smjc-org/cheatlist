@@ -1,2 +1,5 @@
 # cheatlist
- 高频代码片段参考表
+
+常用代码块参考
+
+- [输出格式](src/format.md)
