@@ -114,6 +114,20 @@ proc format;
 quit;
 ```
 
+### 生命体征
+
+```sas
+proc format;
+    value paramn
+        1 = "体温（℃）"
+        2 = "心率（次/分）"
+        3 = "呼吸（次/分）"
+        4 = "收缩压（mmHg）"
+        5 = "舒张压（mmHg）"
+        6 = "体重（Kg）";
+quit;
+```
+
 ### 易用性评估
 
 ```sas
