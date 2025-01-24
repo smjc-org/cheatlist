@@ -191,6 +191,69 @@ data dummy;
 run;
 ```
 
+## BDS 衍生基线标识
+
+常见的情况是，将首次治疗前最后一次访视作为基线。
+
+以 `adlb` 为例：
+
+首先生成一个不涉及基线标识的数据集 `adlb_1`，对它进行排序
+
+```sas
+proc sort data = adlb_1;
+    by USUBJID PARCAT1N PARAMN AVISITN;
+run;
+```
+
+获取首次治疗访视的 `AVISITN`
+
+```sas
+proc sql noprint;
+    create table adlb_1_first_treat_avisitn as
+        select
+            distinct
+            USUBJID,
+            PARCAT1N,
+            PARAMN,
+            min(AVISITN) as FIRST_AVISITN_OF_TREAT
+        from adlb_1 where AVISITN in (2, 3, 4); /* 2, 3, 4 为治疗期访视编号 */
+quit;
+```
+
+然后获取首次治疗前最后一次访视的 `AVISITN`
+
+```sas
+proc sql noprint;
+    create table adlb_1_last_avisitn as
+        select
+            distinct
+            a.USUBJID,
+            a.PARCAT1N,
+            a.PARAMN,
+            max(a.AVISITN) as LAST_AVISITN_BEFORE_TREAT
+        from adlb_1 as a left join adlb_1_first_treat_avisitn as b on a.USUBJID = b.USUBJID and a.PARCAT1N = b.PARCAT1N and a.PARAMN = b.PARAMN
+        where a.AVISITN < b.FIRST_AVISITN_OF_TREAT;
+quit;
+```
+
+衍生基线标识符 `ABLFL`
+
+```sas
+proc sql noprint;
+    create table adlb_2 as
+        select
+            a.*,
+            b.LAST_AVISITN_BEFORE_TREAT,
+            ifc(a.AVISITN = b.LAST_AVISITN_BEFORE_TREAT, "Y", "") as ABLFL
+        from adlb_1 as a left join adlb_1_last_avisitn as b on a.USUBJID = b.USUBJID and a.PARCAT1N and b.PARCAT1N and a.PARAMN and b.PARAMN;
+quit;
+```
+
+> [!NOTE]
+>
+> 注意，上述代码中数据集 `adlb_2` 将包含一个临时变量 `LAST_AVISITN_BEFORE_TREAT`，这是有意为之，便于后续根据访视是否在基线前后决定是否衍生基线值，
+> 一般而言，在 `ABLFL = "Y"` 前的访视，不衍生 `BASE`, `BASEC` 等变量。
+
 ## 比较差异
 
 ```sas
