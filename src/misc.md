@@ -42,3 +42,21 @@ proc sql noprint;
         order by b.armn;
 quit;
 ```
+
+## 本地逻辑库与 xpt 文件互操作
+
+1. 本地逻辑库转 xpt 文件
+
+   ```sas
+   filename xpt "&PATH_ADAM\adam.xpt";
+   proc cport library = adam file = xpt memtype = data;
+   run;
+   ```
+
+2. xpt 文件转本地逻辑库
+
+   ```sas
+   filename xpt "&PATH_ADAM\adam.xpt";
+   proc cimport library = work infile = xpt;
+   run;
+   ```
