@@ -43,9 +43,9 @@ proc sql noprint;
 quit;
 ```
 
-## 本地逻辑库与 xpt 文件互操作
+## 本地逻辑库与 XPT 文件互操作
 
-1. 本地逻辑库转 xpt 文件
+1. 本地逻辑库转 XPT 文件
 
    ```sas
    filename xpt "&PATH_ADAM\adam.xpt";
@@ -53,7 +53,7 @@ quit;
    run;
    ```
 
-2. xpt 文件转本地逻辑库
+2. XPT 文件转本地逻辑库
 
    ```sas
    filename xpt "&PATH_ADAM\adam.xpt";
