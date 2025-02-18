@@ -3,8 +3,8 @@
 ## Listing order 变量处理
 
 ```sas
-data qc_l_7_3_1;
-    set qc_l_7_3_1;
+data l_7_3_1;
+    set l_7_3_1;
     by arm siteid usubjid rnumber aeseq notsorted;
     if not first.arm then arm = "";
     if not first.siteid then siteid = "";
