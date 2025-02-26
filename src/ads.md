@@ -232,9 +232,13 @@ proc sql noprint;
             a.PARAMN,
             max(a.AVISITN) as LAST_AVISITN_BEFORE_TREAT
         from adlb_1 as a left join adlb_1_first_treat_avisitn as b on a.USUBJID = b.USUBJID and a.PARCAT1N = b.PARCAT1N and a.PARAMN = b.PARAMN
-        where a.AVISITN < b.FIRST_AVISITN_OF_TREAT;
+        where (a.AVISITN < b.FIRST_AVISITN_OF_TREAT) or (a.AVISITN = 1 and missing(b.FIRST_AVISITN_OF_TREAT));
 quit;
 ```
+
+> [!NOTE]
+>
+> `a.AVISITN = 1 and missing(b.FIRST_AVISITN_OF_TREAT)` 的作用是在受试者未进行首次治疗时，也可以将基线（`a.AVISITN = 1`）作为首次治疗前的最后一次访视。
 
 衍生基线标识符 `ABLFL`
 
