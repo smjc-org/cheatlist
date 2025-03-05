@@ -20,7 +20,7 @@ column ("@S={just=l}AE类型" item)
        ("@S={borderbottomcolor=black borderbottomwidth=0.5pt}合计 N=&n" value times_fmt);
 ```
 
-## RTF 第一列左对齐
+## RTF 首列左对齐
 
 ```sas
 define item  / display "    严重程度"
