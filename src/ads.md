@@ -3,12 +3,9 @@
 ## 复制数据集
 
 ```sas
-proc datasets noprint nowarn;
-    copy in = rawdata out = work;
-    select ae;
-    copy in = adam out = work;
-    select adsl;
-run;
+proc sql noprint;
+    create table adsl as select * from adam.adsl;
+    create table ae as select * from rawdata.ae;
 quit;
 ```
 
