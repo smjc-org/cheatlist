@@ -13,6 +13,21 @@ data l_7_3_1;
 run;
 ```
 
+## Listing 输出 RTF 使用 `order` 变量
+
+```sas
+column usubjid erlid dvseq dvterm dvstdtc dvreas dvsev dvacn dvres;
+define usubjid / order order = data "筛选号";
+define erlid   / order order = data "入组号";
+define dvseq   / "序号";
+define dvterm  / "偏离描述";
+define dvstdtc / "发生日期";
+define dvreas  / "发生原因";
+define dvsev   / "严重程度";
+define dvacn   / "纠正/预防措施";
+define dvres   / "结果";
+```
+
 ## @S 行内格式化
 
 ```sas
