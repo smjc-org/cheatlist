@@ -43,24 +43,6 @@ proc sql noprint;
 quit;
 ```
 
-## 本地逻辑库与 XPT 文件互操作
-
-1. 本地逻辑库转 XPT 文件
-
-   ```sas
-   filename xpt "&PATH_ADAM\adam.xpt";
-   proc cport library = adam file = xpt memtype = data;
-   run;
-   ```
-
-2. XPT 文件转本地逻辑库
-
-   ```sas
-   filename xpt "&PATH_ADAM\adam.xpt";
-   proc cimport library = work infile = xpt;
-   run;
-   ```
-
 ## 克隆文件夹结构（不复制文件）
 
 ```bash
