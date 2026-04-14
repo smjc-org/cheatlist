@@ -6,6 +6,21 @@
  ;*';*";*/;run;quit;
 ```
 
+## 重置编程环境
+
+```sas
+%let syscc = 0;
+
+dm log 'clear';
+dm output 'clear';
+dm odsresult 'clear';
+
+proc datasets lib=work nolist;
+    delete _all_ /memtype = data;
+    delete formats /memtype = catalog;
+quit;
+```
+
 ## 在单引号内解析宏变量
 
 ```sas
